@@ -42,7 +42,7 @@ end
 
 ## Usage
 Run `bundle exec middleman prismic` in your terminal. This will fetch entries for the configured
-spaces and content types and put the resulting data in the [local data folder](https://middlemanapp.com/advanced/local-data/) as yaml files.
+spaces and content types and put the resulting data in the [local data folder](https://middlemanapp.com/advanced/local-data/) as json files.
 
 For each document mask you have, you will get a file named `prismic_{document-name}` under `/data`.
 So for instance if you have article and product document masks, you will get 2 files: `prismic_articles`, `prismic_products`.

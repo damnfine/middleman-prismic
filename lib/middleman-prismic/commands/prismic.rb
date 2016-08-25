@@ -47,18 +47,18 @@ module Middleman
         available_documents.each do |document_type|
           documents = response.select{|d| d.type == document_type}
           File.open("data/prismic_#{document_type.pluralize}", 'w') do |f|
-            f.write(Hash[[*documents.map.with_index]].invert.to_yaml)
+            f.write(Hash[[*documents.map.with_index]].invert.to_json)
           end
         end
 
         File.open('data/prismic_reference', 'w') do |f|
-          f.write(api.master_ref.to_yaml)
+          f.write(api.master_ref.to_json)
         end
 
         MiddlemanPrismic.options.custom_queries.each do |k, v|
           response = api.form('everything').query(*v).submit(api.master_ref)
           File.open("data/prismic_custom_#{k}", 'w') do |f|
-            f.write(Hash[[*response.map.with_index]].invert.to_yaml)
+            f.write(Hash[[*response.map.with_index]].invert.to_json)
           end
         end
       end
