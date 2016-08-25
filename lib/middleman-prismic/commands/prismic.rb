@@ -34,7 +34,7 @@ module Middleman
 
         Dir.mkdir('data') unless File.exists?('data')
 
-        FileUtils.rm_rf(Dir.glob('data/prismic_*'))
+        FileUtils.rm_rf(Dir.glob('data/prismic_*.json'))
 
         api = ::Prismic.api(MiddlemanPrismic.options.api_url)
         response = api.form('everything').submit(api.ref(reference))
@@ -46,7 +46,7 @@ module Middleman
 
         available_documents.each do |document_type|
           documents = response.select{|d| d.type == document_type}
-          File.open("data/prismic_#{document_type.pluralize}", 'w') do |f|
+          File.open("data/prismic_#{document_type.pluralize}.json", 'w') do |f|
             f.write(Hash[[*documents.map.with_index]].invert.to_json)
           end
         end
@@ -57,7 +57,7 @@ module Middleman
 
         MiddlemanPrismic.options.custom_queries.each do |k, v|
           response = api.form('everything').query(*v).submit(api.master_ref)
-          File.open("data/prismic_custom_#{k}", 'w') do |f|
+          File.open("data/prismic_custom_#{k}.json", 'w') do |f|
             f.write(Hash[[*response.map.with_index]].invert.to_json)
           end
         end
